@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entertainment Hub — Find Your Next Watch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="showPage('home')">
+        <div class="logo-mark">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="9" r="7.5" stroke="white" stroke-width="1.8"/>
+            <polygon points="7.2,5.5 13.5,9 7.2,12.5" fill="white"/>
+          </svg>
+        </div>
+        <div class="logo-text-wrap">
+          <span class="logo-main">Entertainment</span><span class="logo-hub">HUB</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link active" data-page="home" onclick="showPage('home')">Discover</a>
+        <a class="nav-link" data-page="results" onclick="showPage('results')">Results</a>
+        <a class="nav-link" data-page="about" onclick="showPage('about')">About</a>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a onclick="showPage('home');closeMobileMenu()">🔍 Discover</a>
+      <a onclick="showPage('results');closeMobileMenu()">🎬 Results</a>
+      <a onclick="showPage('about');closeMobileMenu()">ℹ️ About</a>
+    </div>
+  </nav>
+
+  <!-- PAGE: HOME -->
+  <section class="page active" id="page-home">
+    <div class="hero-section">
+      <div class="hero-pill">✦ AI-Powered · Real Posters · Instant Results</div>
+      <h1 class="hero-title">Your Ultimate<br/><em>Entertainment Hub</em></h1>
+      <p class="hero-sub">Choose your vibe. We'll find what you'll obsess over next — from anime to blockbusters.</p>
+    </div>
+
+    <div class="selector-wrap">
+      <div class="selector-card">
+
+        <div class="step-block">
+          <div class="step-header">
+            <div class="step-badge">01</div>
+            <div>
+              <div class="step-title">Content Type</div>
+              <div class="step-sub">What are you in the mood for?</div>
+            </div>
+          </div>
+          <div class="type-grid" id="typeGrid">
+            <button class="type-card" data-type="anime" onclick="selectType(this)">
+              <div class="tc-check">✓</div>
+              <div class="tc-icon">⛩️</div>
+              <div class="tc-name">Anime</div>
+              <div class="tc-sub">Japanese animation</div>
+            </button>
+            <button class="type-card" data-type="webseries" onclick="selectType(this)">
+              <div class="tc-check">✓</div>
+              <div class="tc-icon">📺</div>
+              <div class="tc-name">Web Series</div>
+              <div class="tc-sub">Streaming shows & TV</div>
+            </button>
+            <button class="type-card" data-type="movie" onclick="selectType(this)">
+              <div class="tc-check">✓</div>
+              <div class="tc-icon">🎬</div>
+              <div class="tc-name">Movie</div>
+              <div class="tc-sub">Feature films worldwide</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="step-block">
+          <div class="step-header">
+            <div class="step-badge">02</div>
+            <div>
+              <div class="step-title">Pick Genres</div>
+              <div class="step-sub">Select multiple for better matches</div>
+            </div>
+          </div>
+          <div class="genre-grid" id="genreGrid"></div>
+          <div class="genre-count-line">
+            <span id="genreCountText">0 genres selected</span>
+            <button class="clear-genres-btn" id="clearGenresBtn" onclick="clearGenres()" style="display:none">Clear all</button>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="summary-bar" id="summaryBar">
+          <div class="sb-item">
+            <div class="sb-label">Type</div>
+            <div class="sb-val" id="summaryTypeText">Not selected</div>
+          </div>
+          <div class="sb-sep"></div>
+          <div class="sb-item">
+            <div class="sb-label">Genres</div>
+            <div class="sb-val" id="summaryGenreText">None</div>
+          </div>
+          <div class="sb-sep"></div>
+          <div class="sb-item">
+            <div class="sb-label">You'll Get</div>
+            <div class="sb-val accent">9 recommendations</div>
+          </div>
+        </div>
+
+        <button class="cta-btn" id="ctaBtn" onclick="fetchRecommendations()" disabled>
+          <span class="cta-label">Find My Matches</span>
+          <span class="cta-icon">→</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="perks-row">
+      <div class="perk"><span class="perk-icon">🖼️</span><span>Real poster images</span></div>
+      <div class="perk"><span class="perk-icon">⭐</span><span>IMDb-style ratings</span></div>
+      <div class="perk"><span class="perk-icon">📖</span><span>Full synopsis & details</span></div>
+      <div class="perk"><span class="perk-icon">🎯</span><span>Matched % score</span></div>
+      <div class="perk"><span class="perk-icon">🌍</span><span>Global library</span></div>
+    </div>
+  </section>
+
+  <!-- PAGE: RESULTS -->
+  <section class="page" id="page-results">
+    <div class="loading-wrap" id="loadingWrap">
+      <div class="loading-card">
+        <div class="loader-rings">
+          <div class="lr lr1"></div><div class="lr lr2"></div><div class="lr lr3"></div>
+          <span class="lr-emoji">🎬</span>
+        </div>
+        <div class="loader-title">Finding Your Perfect Matches</div>
+        <div class="loader-sub">Entertainment Hub is working its magic…</div>
+        <div class="loader-track"><div class="loader-fill" id="loadingBar"></div></div>
+        <div class="loader-steps">
+          <div class="lstep" id="ls1">⏳ Analyzing your preferences…</div>
+          <div class="lstep" id="ls2">🔍 Searching global database…</div>
+          <div class="lstep" id="ls3">✨ Curating top picks…</div>
+          <div class="lstep" id="ls4">🖼️ Loading images & details…</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-content" id="resultsContent" style="display:none">
+      <div class="results-topbar">
+        <div>
+          <h2 class="results-heading">
+            Your Matches
+            <span class="rc-badge" id="resultsCountBadge">0</span>
+          </h2>
+          <p class="results-meta" id="resultsMeta">Based on your selections</p>
+        </div>
+        <button class="back-btn" onclick="showPage('home')">← New Search</button>
+      </div>
+      <div class="filter-bar" id="filterBar"></div>
+      <div class="cards-grid" id="cardsGrid"></div>
+      <div class="state-box" id="emptyState" style="display:none">
+        <div class="sb-icon">🎭</div>
+        <h3>No results for this filter</h3>
+        <p>Try a different genre filter above.</p>
+      </div>
+      <div class="state-box error" id="errorState" style="display:none">
+        <div class="sb-icon">⚠️</div>
+        <h3>Something went wrong</h3>
+        <p id="errorMsg">Could not load recommendations. Please try again.</p>
+        <button class="cta-btn small" onclick="showPage('home')">← Try Again</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: ABOUT -->
+  <section class="page" id="page-about">
+    <div class="about-wrap">
+      <div class="about-hero-block">
+        <div class="hero-pill">The Story</div>
+        <h2 class="about-big-title">Built for<br/><em>True Fans</em></h2>
+        <p class="about-sub-text">Stop scrolling for 30 minutes and watching nothing. Entertainment Hub solves decision fatigue instantly.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card big">
+          <div class="acard-icon">🤖</div>
+          <h4>Powered by Claude AI</h4>
+          <p>Every recommendation is freshly generated by Anthropic's Claude AI in real-time — contextual, accurate, and tailored to your exact mood and genre combination. Not a static database. Real intelligence.</p>
+        </div>
+        <div class="about-card">
+          <div class="acard-icon">🖼️</div>
+          <h4>Real Images</h4>
+          <p>Actual poster images fetched from public APIs so every card looks authentic and beautiful.</p>
+        </div>
+        <div class="about-card">
+          <div class="acard-icon">🎯</div>
+          <h4>Genre Precision</h4>
+          <p>Mix up to 20 genres. Romantic psychological thriller? Done. The more specific, the better.</p>
+        </div>
+        <div class="about-card">
+          <div class="acard-icon">⚡</div>
+          <h4>Zero Friction</h4>
+          <p>No sign-up. No account. No subscription. Just pick and discover in seconds.</p>
+        </div>
+        <div class="about-card">
+          <div class="acard-icon">🌍</div>
+          <h4>Global Library</h4>
+          <p>Japanese anime, Korean dramas, Hollywood blockbusters, indie films — all in one place.</p>
+        </div>
+      </div>
+      <div class="about-cta">
+        <button class="cta-btn" style="display:inline-flex;width:auto;padding:1.1rem 2.5rem" onclick="showPage('home')">
+          <span class="cta-label">Start Discovering</span>
+          <span class="cta-icon">→</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-container" id="modalContainer">
+      <button class="modal-close-btn" id="modalCloseBtn">✕</button>
+
+      <div class="modal-inner">
+        <!-- LEFT: Poster -->
+        <div class="modal-left">
+          <div class="poster-frame" id="posterFrame">
+            <img id="posterImg" src="" alt="" class="poster-img" />
+            <div class="poster-fallback" id="posterFallback">
+              <div class="pf-emoji" id="pfEmoji">🎬</div>
+              <div class="pf-title" id="pfTitle"></div>
+            </div>
+          </div>
+
+          <div class="modal-score-box">
+            <div class="msb-row">
+              <div class="msb-rating">
+                <span class="msb-star">★</span>
+                <span class="msb-num" id="msbRating">—</span>
+                <span class="msb-denom">/10</span>
+              </div>
+              <div class="msb-label">IMDb Rating</div>
+            </div>
+            <div class="msb-divider"></div>
+            <div class="msb-match">
+              <div class="msb-match-label">Match Score</div>
+              <div class="msb-match-bar"><div class="msb-match-fill" id="matchFill"></div></div>
+              <div class="msb-match-pct" id="matchPct">—</div>
+            </div>
+          </div>
+
+          <div class="modal-quick-facts" id="modalQuickFacts"></div>
+        </div>
+
+        <!-- RIGHT: Details -->
+        <div class="modal-right">
+          <div class="modal-type-row">
+            <span class="modal-type-chip" id="modalTypeChip"></span>
+            <span class="modal-year-chip" id="modalYearChip"></span>
+            <span class="modal-status-chip" id="modalStatusChip"></span>
+          </div>
+
+          <h2 class="modal-title-text" id="modalTitleText"></h2>
+          <div class="modal-network-line" id="modalNetworkLine"></div>
+
+          <div class="modal-tab-bar">
+            <button class="mtab active" data-tab="synopsis" onclick="switchTab(this,'synopsis')">Synopsis</button>
+            <button class="mtab" data-tab="whywatch" onclick="switchTab(this,'whywatch')">Why Watch</button>
+            <button class="mtab" data-tab="details" onclick="switchTab(this,'details')">Details</button>
+          </div>
+
+          <div class="modal-tab-content" id="tabSynopsis">
+            <p id="modalSynopsisText"></p>
+          </div>
+          <div class="modal-tab-content hidden" id="tabWhywatch">
+            <div class="why-box" id="modalWhyText"></div>
+          </div>
+          <div class="modal-tab-content hidden" id="tabDetails">
+            <div class="detail-grid" id="modalDetailGrid"></div>
+          </div>
+
+          <div class="modal-genres-row">
+            <div class="mgr-label">Genres</div>
+            <div class="mgr-tags" id="modalGenreTags"></div>
+          </div>
+
+          <div class="modal-where-row">
+            <div class="mgr-label">Where to Watch</div>
+            <div class="modal-where-val" id="modalWhereVal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-mark small">
+          <svg width="13" height="13" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="9" r="7.5" stroke="white" stroke-width="2"/>
+            <polygon points="7.2,5.5 13.5,9 7.2,12.5" fill="white"/>
+          </svg>
+        </div>
+        <span>Entertainment Hub</span>
+      </div>
+      <p>Powered by Claude AI · Images via TMDB & OMDb · <span id="footerYear"></span></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
